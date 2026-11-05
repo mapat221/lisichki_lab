@@ -18,7 +18,7 @@ docker compose up --build -d
 
 - frontend;
 - backend;
-- bd;
+- bd.
 
 Сервисы доступны по адресам:
 
