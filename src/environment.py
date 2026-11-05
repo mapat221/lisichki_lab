@@ -1,10 +1,13 @@
 import os
 
+APP_ENV: str = os.getenv("APP_ENV", "development")
+
 DATABASE_URL: str = os.getenv(
     "DATABASE_URL",
     "postgresql+asyncpg://postgres:postgres@localhost:5432/lisichki_db",
 )
 
+HASH_SCHEME: str = os.getenv("HASH_SCHEME", "argon2id")
 ARGON2_TIME_COST: int = int(os.getenv("ARGON2_TIME_COST", "3"))
 ARGON2_MEMORY_COST: int = int(os.getenv("ARGON2_MEMORY_COST", "65536"))
 ARGON2_PARALLELISM: int = int(os.getenv("ARGON2_PARALLELISM", "4"))

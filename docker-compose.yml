@@ -19,8 +19,10 @@ services:
     container_name: lisichki_backend
     restart: always
     environment:
+      APP_ENV: development
       PYTHONPATH: /app/src
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/lisichki_db
+      HASH_SCHEME: argon2id
       ARGON2_TIME_COST: 3
       ARGON2_MEMORY_COST: 65536
       ARGON2_PARALLELISM: 4

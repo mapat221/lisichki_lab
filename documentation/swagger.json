@@ -1,0 +1,1083 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Lisichki",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/register": {
+      "post": {
+        "tags": [
+          "registration"
+        ],
+        "summary": "Register",
+        "operationId": "register_api_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponseBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAlreadyExistsResponseBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeakPasswordResponseBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api_server__schema__responses__login__errors__UserNotFoundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPasswordResponseBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Get Users",
+        "operationId": "get_users_api_users_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUsersResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponseBody"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionDeniedResponseBody"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles": {
+      "post": {
+        "tags": [
+          "roles"
+        ],
+        "summary": "Set Roles",
+        "operationId": "set_roles_api_roles_post",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetRolesRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetRolesResponseBody"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CannotModifyAdminResponseBody"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponseBody"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionDeniedResponseBody"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api_server__schema__responses__roles__errors__UserNotFoundResponseBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "get": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "Get Messages",
+        "operationId": "get_messages_api_messages_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMessagesResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponseBody"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "Send Message",
+        "operationId": "send_message_api_messages_post",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendMessageResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponseBody"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyMessageResponseBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/api/messages/{message_id}": {
+      "delete": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "Delete Message",
+        "operationId": "delete_message_api_messages__message_id__delete",
+        "parameters": [
+          {
+            "name": "message_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Message Id"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteMessageResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponseBody"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionDeniedResponseBody"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageNotFoundResponseBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CannotModifyAdminResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Cannot modify admin roles"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "CannotModifyAdminResponseBody"
+      },
+      "DeleteMessageResponseBody": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Delete status",
+            "examples": [
+              "Message deleted"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "DeleteMessageResponseBody"
+      },
+      "EmptyMessageResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Message text can not be empty"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "EmptyMessageResponseBody"
+      },
+      "GetMessagesResponseBody": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/MessageItem"
+            },
+            "type": "array",
+            "title": "Messages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "messages"
+        ],
+        "title": "GetMessagesResponseBody"
+      },
+      "GetUsersResponseBody": {
+        "properties": {
+          "users": {
+            "items": {
+              "$ref": "#/components/schemas/UserRoleItem"
+            },
+            "type": "array",
+            "title": "Users"
+          }
+        },
+        "type": "object",
+        "required": [
+          "users"
+        ],
+        "title": "GetUsersResponseBody"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InvalidPasswordResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Invalid password for user"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "InvalidPasswordResponseBody"
+      },
+      "LoginRequestBody": {
+        "properties": {
+          "login": {
+            "type": "string",
+            "title": "Login",
+            "description": "User login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "title": "Password",
+            "description": "User password",
+            "examples": [
+              "StrongPassword123!"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "login",
+          "password"
+        ],
+        "title": "LoginRequestBody"
+      },
+      "LoginResponseBody": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Login status",
+            "examples": [
+              "User registrated"
+            ]
+          },
+          "access_token": {
+            "type": "string",
+            "title": "Access Token",
+            "description": "User acess token",
+            "examples": [
+              "eyJhbGciOiJIUzI1Ni..."
+            ]
+          },
+          "login": {
+            "type": "string",
+            "title": "Login",
+            "description": "User login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Roles",
+            "description": "User roles",
+            "examples": [
+              [
+                "user"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "access_token",
+          "login",
+          "roles"
+        ],
+        "title": "LoginResponseBody"
+      },
+      "MessageItem": {
+        "properties": {
+          "id_": {
+            "type": "string",
+            "title": "Id",
+            "description": "Message id",
+            "examples": [
+              "1"
+            ]
+          },
+          "author_login": {
+            "type": "string",
+            "title": "Author Login",
+            "description": "Author login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "description": "Message text",
+            "examples": [
+              "Hello world!"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_",
+          "author_login",
+          "text",
+          "created_at"
+        ],
+        "title": "MessageItem"
+      },
+      "MessageNotFoundResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Message not found"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "MessageNotFoundResponseBody"
+      },
+      "PermissionDeniedResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Access denied for caller"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "PermissionDeniedResponseBody"
+      },
+      "RegistrationRequestBody": {
+        "properties": {
+          "login": {
+            "type": "string",
+            "title": "Login",
+            "description": "User login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "title": "Password",
+            "description": "User password",
+            "examples": [
+              "StrongPassword123!"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "login",
+          "password"
+        ],
+        "title": "RegistrationRequestBody"
+      },
+      "RegistrationResponseBody": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": true
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Registration status",
+            "examples": [
+              "User registrated"
+            ]
+          },
+          "access_token": {
+            "type": "string",
+            "title": "Access Token",
+            "description": "User acess token",
+            "examples": [
+              "eyJhbGciOiJIUzI1Ni..."
+            ]
+          },
+          "login": {
+            "type": "string",
+            "title": "Login",
+            "description": "User login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Roles",
+            "description": "User roles",
+            "examples": [
+              [
+                "user"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "access_token",
+          "login",
+          "roles"
+        ],
+        "title": "RegistrationResponseBody"
+      },
+      "Roles": {
+        "type": "string",
+        "enum": [
+          "user",
+          "moderator",
+          "admin"
+        ],
+        "title": "Roles"
+      },
+      "SendMessageRequestBody": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "description": "Message text",
+            "examples": [
+              "Hello world!"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "SendMessageRequestBody"
+      },
+      "SendMessageResponseBody": {
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/MessageItem"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "SendMessageResponseBody"
+      },
+      "SetRolesRequestBody": {
+        "properties": {
+          "target_login": {
+            "type": "string",
+            "title": "Target Login",
+            "description": "Target user login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "roles": {
+            "items": {
+              "$ref": "#/components/schemas/Roles"
+            },
+            "type": "array",
+            "title": "Roles",
+            "description": "New roles for target user",
+            "examples": [
+              [
+                "user",
+                "moderator"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "target_login",
+          "roles"
+        ],
+        "title": "SetRolesRequestBody"
+      },
+      "SetRolesResponseBody": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Set roles status",
+            "examples": [
+              "Roles updated"
+            ]
+          },
+          "login": {
+            "type": "string",
+            "title": "Login",
+            "description": "Target user login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "roles": {
+            "items": {
+              "$ref": "#/components/schemas/Roles"
+            },
+            "type": "array",
+            "title": "Roles",
+            "description": "Target user roles",
+            "examples": [
+              [
+                "user",
+                "moderator"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "login",
+          "roles"
+        ],
+        "title": "SetRolesResponseBody"
+      },
+      "UnauthorizedResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Unauthorized"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "UnauthorizedResponseBody"
+      },
+      "UserAlreadyExistsResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "User already exists"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "UserAlreadyExistsResponseBody"
+      },
+      "UserRoleItem": {
+        "properties": {
+          "login": {
+            "type": "string",
+            "title": "Login",
+            "description": "User login",
+            "examples": [
+              "Alfredo"
+            ]
+          },
+          "roles": {
+            "items": {
+              "$ref": "#/components/schemas/Roles"
+            },
+            "type": "array",
+            "title": "Roles",
+            "description": "User roles",
+            "examples": [
+              [
+                "user",
+                "moderator"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "login",
+          "roles"
+        ],
+        "title": "UserRoleItem"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WeakPasswordResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "User password is so weak"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "WeakPasswordResponseBody"
+      },
+      "api_server__schema__responses__login__errors__UserNotFoundResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "User not found"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "UserNotFoundResponseBody"
+      },
+      "api_server__schema__responses__roles__errors__UserNotFoundResponseBody": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error detail",
+            "examples": [
+              "Target user not found"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "UserNotFoundResponseBody"
+      }
+    }
+  }
+}
