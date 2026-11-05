@@ -1,7 +1,7 @@
 [project]
 name = "paszi-4"
 version = "0.1.0"
-description = "Lisichki RBAC project"
+description = "Lisichki paszi lab project"
 authors = [
     {name = "mapat221", email = "maratnazmeve@gmail.com"},
     {name = "Artem", email = "a@gmail.com"},

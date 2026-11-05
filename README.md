@@ -99,12 +99,27 @@ curl -X DELETE http://localhost:8000/api/messages/1 \
 ```bash
 curl -X POST http://localhost:8000/api/roles \
   -H "Content-Type: application/json" \
-  -H "token: ТОКЕН_АДМИНА" \
+  -H "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiJ9.VslRrz8vCKya9Nte32L_p8Lk9IBTYWpythvpJBsHaoI" \
   -d '{"target_login": "user1", "roles": ["user", "moderator"]}'
 ```
 
 Ответ:
 
 ```json
-{"detail":"Access denied for caller"}
+{"message":"Roles updated","login":"user1","roles":["user","moderator"]}
 ```
+
+## Демонстрация работы
+
+### Форма регистрации
+
+![registration](resources/registration.png)
+
+### Проверка ролевой модели
+![Image](resources/forbidden.png)
+
+### Панель управления ролями
+![Image](resources/panel.png)
+
+### Ветка Git
+![Image](resources/git.png)
