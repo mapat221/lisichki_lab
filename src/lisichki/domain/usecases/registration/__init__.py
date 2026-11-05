@@ -1,0 +1,1 @@
+from .registrate_user import RegistrateUserUseCase

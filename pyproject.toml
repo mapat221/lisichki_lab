@@ -1,0 +1,44 @@
+[project]
+name = "paszi-4"
+version = "0.1.0"
+description = "Lisichki RBAC project"
+authors = [
+    {name = "mapat221", email = "maratnazmeve@gmail.com"},
+    {name = "Artem", email = "a@gmail.com"},
+    {name = "Eric", email = "e@gmail.com"}
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic (>=2.14.2,<3.0.0)",
+    "argon2-cffi (>=25.1.0,<26.0.0)",
+    "alembic (>=1.20.1,<2.0.0)",
+    "asyncpg (>=0.32.0,<0.33.0)",
+    "fastapi (>=0.162.0,<0.163.0)",
+    "uvicorn (>=0.54.0,<0.55.0)",
+    "pyjwt (>=2.15.1,<3.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.17.3,<0.18.0)",
+    "mypy (>=2.4.1,<3.0.0)",
+    "pytest (>=9.2.0,<10.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "pytest-asyncio (>=1.4.1.post1,<2.0.0)"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+mypy_path = "src"
+explicit_package_bases = true
+ignore_missing_imports = true
+exclude = ["migrations"]
+
+[tool.poetry]
+package-mode = false
